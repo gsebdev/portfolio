@@ -1,0 +1,62 @@
+    @font-face {
+    font-family: 'SF Old Republic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('SF Old Republic'), url('SF Old Republic.woff') format('woff');
+    }
+    
+
+    @font-face {
+    font-family: 'SF Old Republic Italic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('SF Old Republic Italic'), url('SF Old Republic Italic.woff') format('woff');
+    }
+    
+
+    @font-face {
+    font-family: 'SF Old Republic Bold';
+    font-style: normal;
+    font-weight: normal;
+    src: local('SF Old Republic Bold'), url('SF Old Republic Bold.woff') format('woff');
+    }
+    
+
+    @font-face {
+    font-family: 'SF Old Republic Bold Italic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('SF Old Republic Bold Italic'), url('SF Old Republic Bold Italic.woff') format('woff');
+    }
+    
+
+    @font-face {
+    font-family: 'SF Old Republic SC';
+    font-style: normal;
+    font-weight: normal;
+    src: local('SF Old Republic SC'), url('SF Old Republic SC.woff') format('woff');
+    }
+    
+
+    @font-face {
+    font-family: 'SF Old Republic SC Italic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('SF Old Republic SC Italic'), url('SF Old Republic SC Italic.woff') format('woff');
+    }
+    
+
+    @font-face {
+    font-family: 'SF Old Republic SC Bold';
+    font-style: normal;
+    font-weight: normal;
+    src: local('SF Old Republic SC Bold'), url('SF Old Republic SC Bold.woff') format('woff');
+    }
+    
+
+    @font-face {
+    font-family: 'SF Old Republic SC Bold Italic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('SF Old Republic SC Bold Italic'), url('SF Old Republic SC Bold Italic.woff') format('woff');
+    }
