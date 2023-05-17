@@ -1,0 +1,14 @@
+.logo {
+    font-size: 3em;
+    color: var(--secondary-color);
+    text-decoration: none;
+}
+.header {
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
