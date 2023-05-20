@@ -1,0 +1,19 @@
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    z-index: -1;
+    background-color: var(--primary-color);
+    > div{
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        right: 0;
+        transform-origin: 100%;
+        transition: transform 0.3s ease-in-out;
+        background-color: var(--secondary-color);
+    }
+}
