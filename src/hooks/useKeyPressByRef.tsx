@@ -3,7 +3,6 @@ import { useCallback, useEffect } from "react";
 export default function useKeyPressByRef(ref: any, callback: () => void, keys: string[]) {
     const element = ref.current
     const handler = useCallback(({ code }: KeyboardEvent) => {
-        console.log(code)
         if(keys.includes(code)) {
             callback()
         }
