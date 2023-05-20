@@ -1,8 +1,8 @@
+
 import './globals.css'
 import Link from "next/link"
 import BurgerMenu from "@/components/BurgerMenu"
 import styles from './layout.module.css'
-
 
 export const metadata = {
   title: 'Sébastien GAULT',
@@ -14,6 +14,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  
+
   return (
     <html lang="fr">
       <body>

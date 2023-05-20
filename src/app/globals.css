@@ -3,36 +3,26 @@
 @tailwind utilities;
 
 @import '../assets/fonts/style.css';
+
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
   --primary-color: #0041c5;
   --secondary-color: #5dffa0;
   --primary-text-color: white;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
 body {
   font-family: 'SF Old Republic';
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
+  background: linear-gradient(to bottom,
       transparent,
-      rgb(var(--background-end-rgb))
-    );
-    background-repeat: no-repeat;
-    background-size: 100%;
+      rgb(var(--background-end-rgb)));
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
+
 h1 {
   font-size: 3rem;
   color: var(--primary-text-color);
   font-weight: 700;
 }
+
