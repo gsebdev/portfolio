@@ -1,0 +1,48 @@
+.container {
+    position: fixed;
+    top: 50%;
+    right: 50px;
+    transform: translateY(-50%);
+    z-index: 999
+}
+.item {
+    height: 30px;
+    width: 30px;
+    margin: 2px 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    &::after {
+        content: '';
+        opacity: 0;
+        height: 33%;
+        width: 33%;
+        position: absolute;
+        border: 1px solid var(--primary-bg-color);
+        border-radius: 50%;
+        transition: opacity 0.3s ease-in-out 0.1s, transform 0.3s ease-in-out 0.2s;
+    }
+    &::before {
+        border-radius: 50%;
+        content: '';
+        opacity: 1;
+        height: 33%;
+        width: 33%;
+        position: absolute;
+        background-color: var(--primary-bg-color);
+        transition: opacity 0.5s ease-in-out 0.1s,transform 0.3s ease-in-out
+    }
+    &.active {
+        &::before {
+            transform: scale(2.2);
+            opacity: 0;
+        }
+        &::after {
+            transform: scale(2) rotate(45deg);
+            opacity: 1;
+        }
+    }
+    
+}

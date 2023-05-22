@@ -1,36 +1,42 @@
 
 import './globals.css'
-import Link from "next/link"
-import BurgerMenu from "@/components/BurgerMenu"
-import styles from './layout.module.css'
+import styles from './layout.module.scss'
+import { PropsWithChildren, useMemo } from 'react'
+import {HeaderContextProvider} from '@/context'
+import Header from '@/components/Header'
+
 
 export const metadata = {
   title: 'Sébastien GAULT',
   description: 'Frontend Developper',
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  
+const RootLayout: React.FC<PropsWithChildren> = ({ children }) => {
+  const navLinks = useMemo(() => [
+    {
+      href: '/aaa',
+      name: 'CV'
+    },
+    {
+      href: '/bbb',
+      name: 'Portfolio',
+    },
+    {
+      href: '/ccc',
+      name: 'Contact'
+    }
+  ], [])
 
   return (
-    <html lang="fr">
-      <body>
-        <header className={styles.header}>
-          <Link href='/' className={styles.logo} aria-label="Logo, Aller à la page d'accueil">S_G</Link>
-          <BurgerMenu>
-            <ul>
-              <li><Link href='/aaa'>CV</Link></li>
-              <li><Link href='/bbb'>Portfolio</Link></li>
-              <li><Link href='/ccc'>Contact</Link></li>
-            </ul>
-          </BurgerMenu>
-        </header>
+    <HeaderContextProvider>
+      <html lang="fr">
+      <body className={styles.home}>
+        <Header navLinks={navLinks}/>
         {children}
       </body>
     </html>
+    </HeaderContextProvider>
   )
 }
+
+export default RootLayout
