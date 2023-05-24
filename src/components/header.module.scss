@@ -11,6 +11,7 @@
     span {
         &:nth-child(2),
         &:nth-child(4) {
+            transform-origin: left;
             transition: transform 0.3s ease-in-out, opacity 0.2s ease-in-out;
             opacity: 1;
         }
@@ -21,12 +22,12 @@
     &.contracted {
         span {
             &:nth-child(2) {
-                transform: translateX(100px);
+                transform: scaleX(0);
                 opacity: 0;
             }
 
             &:nth-child(4) {
-                transform: translateX(-100px);
+                transform: scaleX(0);
                 opacity: 0;
             }
 

@@ -1,9 +1,20 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-export default function useScrollBySection(container: React.RefObject<HTMLElement>, transitionDuration: number) {
+export default function useScrollBySection(container: React.RefObject<HTMLElement>, transitionDuration: number, hideScrollBar: true | false = true) {
     const [activeSection, setActiveSection] = useState<number>(0)
     const [sections, setSections] = useState<HTMLElement[]>([])
     const isTransition = useRef(false)
+
+    //hide body scrollbar if `hideScrollBar`is true
+    useEffect(() => {
+        if(hideScrollBar) {
+            document.body.setAttribute('style', 'overflow: hidden')
+        }
+        return () => {
+            document.body.removeAttribute('style')
+        }
+    }, [hideScrollBar])
+
     // get an array of the sections in the container
     useEffect(() => {
         if (container.current) {

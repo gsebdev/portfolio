@@ -1,0 +1,85 @@
+$arrow-height: 30px;
+$spacing-offset: 3px;
+.timeline {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    height: 100%;
+}
+.element {
+    position: relative;
+    .text {
+        width: calc(100% - ($spacing-offset * 4));
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        bottom: calc(50% + $arrow-height);
+        left: $spacing-offset * 2
+    }
+    .arrow {
+        height: $arrow-height;
+        width: 100%;
+        clip-path: polygon(90% 0, 100% 50%, 90% 100%, 0% 100%, 10% 50%, 0% 0%);
+        position: absolute;
+        top: calc(50% - ($arrow-height / 2))
+        
+    }
+    .line {
+        width: 2px;
+        background-color: var(--secondary-bg-color);
+        position: absolute;
+        top: 50%;
+        left: calc(50% + ($spacing-offset * 2) - 1px);
+        height: 20%;
+        &::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            position: absolute;
+            left: calc(50% - 5px);
+            top: -5px;
+            border-radius: 50%;
+            background-color: var(--secondary-bg-color);
+        }
+        &::before {
+            content: '';
+            width: 10px;
+            height: 10px;
+            position: absolute;
+            left: calc(50% - 5px);
+            bottom: -5px ;
+            border-radius: 50%;
+            background-color: var(--secondary-bg-color);
+        }
+    }
+    &.reverse {
+        .text {
+            flex-direction: column-reverse;
+            top: calc(50% + $arrow-height);
+            bottom: unset;
+            
+        }
+        .line {
+            bottom: 50%;
+            top: unset;
+        }
+    }
+    &:nth-child(n+2) {
+        margin-left: -1 * $spacing-offset;
+    }
+}
+
+
+.time {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--secondary-bg-color);
+}
+.content {
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+.title {
+    font-weight: 700;
+    font-size: 1.3rem;
+}

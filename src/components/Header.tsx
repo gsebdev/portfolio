@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import styles from './header.module.scss'
 import BurgerMenu from './BurgerMenu';
-import { ReactElement, RefObject, useContext, useEffect, useRef } from 'react';
+import { RefObject, useContext, useEffect, useRef } from 'react';
 import { HeaderContext } from '@/context';
 
 export interface NavLinkObject {
@@ -15,6 +15,7 @@ const Header: React.FC<{ navLinks: NavLinkObject[] }> = ({ navLinks }) => {
     const { fullLogo } = useContext(HeaderContext)
     const logoSpanToCompactRef: RefObject<HTMLElement> = useRef(null)
     const logoSpanToTranslateRef: RefObject<HTMLElement> = useRef(null)
+    
     useEffect(() => {
         if (logoSpanToCompactRef.current && logoSpanToTranslateRef.current) {
             if(!fullLogo) {
@@ -27,6 +28,7 @@ const Header: React.FC<{ navLinks: NavLinkObject[] }> = ({ navLinks }) => {
 
         }
     })
+
     return (
         <header className={styles.header}>
             <Link
@@ -36,8 +38,11 @@ const Header: React.FC<{ navLinks: NavLinkObject[] }> = ({ navLinks }) => {
             >
                 <span>S</span>
                 <span ref={logoSpanToCompactRef} className={styles.spanSmall}>ébastien&nbsp;</span>
-                <span ref={logoSpanToTranslateRef}>G</span>
-                <span className={styles.spanSmall}>ault</span>
+                <span ref={logoSpanToTranslateRef}>
+                    <span>G</span>
+                    <span className={styles.spanSmall}>ault</span> 
+                </span>
+                
             </Link>
             <BurgerMenu>
                 <ul>

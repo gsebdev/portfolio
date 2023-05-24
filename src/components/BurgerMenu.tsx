@@ -1,12 +1,17 @@
 'use client'
 
-import { useRef, useState } from 'react'
-import styles from './burgerMenu.module.css'
+import { useContext, useRef, useState } from 'react'
+import styles from './burgerMenu.module.scss'
 import useOutsideClick from '@/hooks/useOusideClick'
 import useKeyPressByRef from '@/hooks/useKeyPressByRef'
-
-export default function BurgerMenu({ children, color, id='main-menu' }: { children: React.ReactNode, color?: string|undefined, id?: string }) {
+import { HeaderContext } from '@/context'
+interface BurgerMenuProps {
+    children: React.ReactNode
+    id?: string
+}
+export default function BurgerMenu({ children, id='main-menu'}: BurgerMenuProps) {
     const [isOpen, setOpen] = useState<true|false>(false)
+    const { burgerInverted } = useContext(HeaderContext)
     const navRef = useRef<HTMLElement>(null)
     const burgerRef = useRef<HTMLDivElement>(null)
 
@@ -29,7 +34,7 @@ export default function BurgerMenu({ children, color, id='main-menu' }: { childr
     //custom hook to close the nave element on outside click
     useOutsideClick(navRef, () => {setOpen(false)}, isOpen)
     
-    const line = <div className={styles.lines} style={{ background: color }}></div>
+    const line = <div className={`${styles.lines} ${burgerInverted? styles.inverted : ''}`}></div>
 
     return (
         <div className={styles.menu}>

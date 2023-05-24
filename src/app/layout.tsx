@@ -1,8 +1,7 @@
 
 import './globals.css'
-import styles from './layout.module.scss'
 import { PropsWithChildren, useMemo } from 'react'
-import {HeaderContextProvider} from '@/context'
+import { HeaderContextProvider } from '@/context'
 import Header from '@/components/Header'
 
 
@@ -14,7 +13,7 @@ export const metadata = {
 const RootLayout: React.FC<PropsWithChildren> = ({ children }) => {
   const navLinks = useMemo(() => [
     {
-      href: '/aaa',
+      href: '/portfolio',
       name: 'CV'
     },
     {
@@ -29,12 +28,12 @@ const RootLayout: React.FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <HeaderContextProvider>
-      <html lang="fr">
-      <body className={styles.home}>
-        <Header navLinks={navLinks}/>
-        {children}
-      </body>
-    </html>
+        <html lang="fr">
+          <body>
+            <Header navLinks={navLinks} />
+            {children}
+          </body>
+        </html>
     </HeaderContextProvider>
   )
 }
