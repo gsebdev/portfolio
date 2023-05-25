@@ -83,7 +83,15 @@ $spacing-offset: 3px;
         padding: 0.5rem;
         transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
     }
-
+    &.active {
+        .content {
+            opacity: 1;
+            animation: slideInBound 0.3s ease-in-out both;
+        }
+        .line {
+            transform: scaleY(0);
+        }
+    }
     // reverse class for odd elements in the list
     &.reverse {
         .content {
