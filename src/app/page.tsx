@@ -90,9 +90,9 @@ export default function Home() {
                     </div>
 
                 </section>
-                <section id="profil" className={`${styles.section2} ${activeSection === 1 ? styles.active : ''}`}>
+                <section id="story" className={`${styles.section2} ${activeSection === 1 ? styles.active : ''}`}>
                     <h2>Ma Story</h2>
-                    <div className='overflow-hidden'>
+                    <div>
                         <TimeLine timelineElements={bio} />
                     </div>
                 </section>
