@@ -8,18 +8,6 @@ $spacing-offset: 3px;
     width: 100%;
     justify-content: center;
     height: 100%;
-
-    &:hover {
-        .element:not(:hover) {
-            opacity: 0.2 !important;
-        }
-    }
-
-    &:focus-within {
-        .element:not(:focus) {
-            opacity: 0.2 !important;
-        }
-    }
 }
 
 // li element for each timeline element
@@ -86,7 +74,6 @@ $spacing-offset: 3px;
     // text content appearing when focus and hover
     .content {
         opacity: 0;
-        font-size: 1rem;
         font-weight: 400;
         position: absolute;
         top: calc(50% + $arrow-height);
@@ -122,24 +109,8 @@ $spacing-offset: 3px;
         margin-left: -1 * $spacing-offset;
     }
 
-    // when focus and hover on the li element
-    &:hover,
-    &:focus {
-        opacity: 1 !important;
-        .content {
-            opacity: 1;
-            animation: slideInBound 0.3s ease-in-out 1 both;
-        }
-
-        .arrow {
-            transform: scaleY(1.3);
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .line {
-            transform: scaleY(0);
-            opacity: 0;
-        }
+    &:focus-visible {
+        outline: 0
     }
 }
 
