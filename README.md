@@ -1,5 +1,5 @@
-This is my Portfolio web app -- still in development
-used with create-next-app
+This is my Portfolio web app -- still in development\
+Created with create-next-app\
 feel free to follow this work
 
 ## Usage
