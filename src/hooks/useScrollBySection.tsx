@@ -100,10 +100,10 @@ const useScrollBySection = (container: React.RefObject<HTMLElement>, transitionD
         if (section) {
             const { bottom } = section.getBoundingClientRect()
             //if bottom of the section is visible
-            if (bottom <= window.innerHeight) {
+            if (Math.floor(bottom) <= window.innerHeight) {
                 setActiveSection(a => Math.min(sections.length - 1, a + 1))
             } else {
-                const scrollTarget = window.scrollY + Math.max(window.innerHeight * 0.67, bottom)
+                const scrollTarget = Math.round(window.scrollY + Math.min(window.innerHeight * 0.67, bottom - window.innerHeight))
                 animateScrollTo(scrollTarget)
             }
         }
@@ -114,10 +114,11 @@ const useScrollBySection = (container: React.RefObject<HTMLElement>, transitionD
         if (section) {
             const { top } = section.getBoundingClientRect()
             //if top of the section is visible
-            if (top >= 0) {
+            if (Math.ceil(top) >= 0) {
                 setActiveSection(a => Math.max(0, a - 1))
             } else {
-                const scrollTarget = window.scrollY - Math.max(Math.abs(top), window.innerHeight * 0.67)
+                const scrollTarget = Math.floor(window.scrollY - Math.min(Math.abs(top), window.innerHeight * 0.67))
+                console.log(scrollTarget, top, window.scrollY + top)
                 animateScrollTo(scrollTarget)
             }
         }
