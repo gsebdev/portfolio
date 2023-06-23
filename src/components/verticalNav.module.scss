@@ -1,9 +1,17 @@
+@import '../app/variables.scss';
+
 .container {
     position: fixed;
     top: 50%;
     right: 50px;
     transform: translateY(-50%);
     z-index: 999;
+    @media (max-width: $tablet-breakpoint) {
+        right: 20px;
+    }
+    @media (max-width: $mobile-breakpoint) {
+        right: 10px;
+    }
 
     .item {
         height: 30px;

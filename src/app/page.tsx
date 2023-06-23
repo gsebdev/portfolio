@@ -19,13 +19,12 @@ const invertedColorsSections = [2]
 const Home: React.FC = () => {
     const mainRef = useRef(null)
     const { activeSection, setActiveSection } = useScrollBySection(mainRef, 500)
-    const { setFullLogo, setBurgerInverted } = useContext(HeaderContext)
+    const { setBurgerInverted } = useContext(HeaderContext)
 
     //handle the logo state and inverted color for nav elements
     useEffect(() => {
-        activeSection === 0 ? setFullLogo(true) : setFullLogo(false)
         invertedColorsSections.includes(activeSection) ? setBurgerInverted(true) : setBurgerInverted(false)
-    }, [activeSection, setFullLogo, setBurgerInverted])
+    }, [activeSection, setBurgerInverted])
 
     return (
         <>

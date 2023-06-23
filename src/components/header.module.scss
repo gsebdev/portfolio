@@ -1,8 +1,8 @@
 @import '../app/variables.scss';
 
 .logo {
-    font-size: 2.3rem;
-    line-height: 2rem;
+    font-size: 2em;
+    line-height: calc(1em + 5px);
     font-weight: 900;
     color: var(--primary-color);
     text-decoration: none;
@@ -10,54 +10,71 @@
     flex-direction: column;
     justify-content: center;
     position: relative;
+    
+    &::after{
+        content: '';
+        position: absolute;
+        top: calc(50% - 2.5px);
+        left: 0;
+        height: 5px;
+        width: 130%;
+        background-color: rgba($secondary-color, 0.3);
+        transition: transform 0.2s ease-in-out;
+        transform-origin: left;
+        @media (max-width: $mobile-breakpoint) {
+            height: 3px;
+            top: calc(50% + 2px);
+            left: 10px;
+            width: 120%;
+        }
+    }
+
     @media (max-width: $mobile-breakpoint) {
-        font-size: 1.5rem;
-        line-height: 1.5rem;
+        font-size: 1.6em;
+        line-height: 1em;
+        padding: 10px 0 0 10px;
     }
     span {
         display: inline-block;
-        
         transition: transform 0.2s ease-in-out;
     }
 
-    span {
+    span span {
+
         &:nth-child(2),
         &:nth-child(4) {
             transform-origin: left;
             transition: transform 0.2s ease-in-out, opacity 0.1s ease-in-out;
             opacity: 1;
         }
-
-
     }
+
     .underline {
+        color: $secondary-color;
+        width: 100%;
+        display: block;
         position: absolute;
-        bottom: 0;
-        left:0;
+        bottom: -5px;
+        left: 0;
         transform-origin: left;
         transition: transform 0.2s ease-in-out;
-        @media (max-width: $mobile-breakpoint) {
-            bottom: 5px;
-        }
     }
-    &.contracted {
-        span span {
-            &:nth-child(2) {
-                transform: scaleX(0);
-                opacity: 0;
-            }
 
+    &.contracted {
+        &::after{
+            transform: scaleX(0.1);
+        }
+        span span {
+
+            &:nth-child(2),
             &:nth-child(4) {
                 transform: scaleX(0);
                 opacity: 0;
             }
 
         }
-        .underline {
-            transform: translateY(-2rem) scaleX(0.3) scaleY(0.5);
-        }
     }
-    
+
 }
 
 .header {
@@ -69,7 +86,8 @@
     left: 0;
     width: 100%;
     z-index: 998;
+
     @media (max-width: $mobile-breakpoint) {
-        
+        padding: 10px;
     }
 }
