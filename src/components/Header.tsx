@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import styles from './header.module.scss'
 import BurgerMenu from './BurgerMenu'
-import { RefObject, useState, useEffect, useRef } from 'react'
+import { RefObject, useState, useEffect, useRef, useCallback } from 'react'
 import { UrlObject } from 'url'
 
 
@@ -18,27 +18,44 @@ const Header: React.FC<{ navLinks: NavLinkObject[] }> = ({ navLinks }) => {
     const logoSpanToTranslateRef: RefObject<HTMLElement> = useRef(null)
     const underlineToTransformRef: RefObject<HTMLElement> = useRef(null)
 
-    const handleFullLogo: () => void = () => {
+    const handleFullLogo: () => void = useCallback(() => {
         if (window.scrollY <= 50) {
             setFullLogo(true)
         } else {
             setFullLogo(false)
         }
-    }
-    console.log('refresh')
-    useEffect(() => {
-        if (!fullLogo) {
+    }, [])
+
+    const contractLogo = useCallback(() => {
             const width = firstCapitalRef.current ? firstCapitalRef.current.offsetWidth : 0
             const height = firstCapitalRef.current ? firstCapitalRef.current.offsetHeight : 0
             if (logoSpanToTranslateRef.current) logoSpanToTranslateRef.current.style.transform = `translate(${width}px, -${height}px)`
             if (underlineToTransformRef.current) underlineToTransformRef.current.style.transform = `translate(0, -${height}px) rotate(15deg) scaleX(0.4) scaleY(0.8)`
+    }, [])
+
+    const releaseLogo = useCallback(() => {
+        if (logoSpanToTranslateRef.current) logoSpanToTranslateRef.current.style.transform = ''
+        if (underlineToTransformRef.current) underlineToTransformRef.current.style.transform = ''
+    }, [])
+
+    const handleWindowResize = useCallback(() => {
+        if(!fullLogo) contractLogo()
+    }, [fullLogo, contractLogo])
+
+    useEffect(() => {
+        if (!fullLogo) {
+            contractLogo()
         } else {
-            if (logoSpanToTranslateRef.current) logoSpanToTranslateRef.current.style.transform = ''
-            if (underlineToTransformRef.current) underlineToTransformRef.current.style.transform = ''
+           releaseLogo()
         }
     })
     useEffect(() => {
         window.addEventListener('scroll', handleFullLogo)
+        window.addEventListener('resize', handleWindowResize)
+        return (() => {
+            window.removeEventListener('scroll', handleFullLogo)
+            window.removeEventListener('resize', handleWindowResize)
+        })
     })
     return (
         <header className={styles.header}>
