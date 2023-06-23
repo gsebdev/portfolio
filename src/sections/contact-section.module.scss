@@ -1,0 +1,12 @@
+@import '../app/variables.scss';
+
+.contact {
+    background-color: green;
+    min-height: 60vh;
+    .container {
+        max-width: $large-max-width;
+        margin: 0 auto;
+        padding: 150px 150px;
+        overflow: hidden;
+    }
+}

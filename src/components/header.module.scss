@@ -1,26 +1,47 @@
-.logo {
-    font-size: 3em;
-    color: var(--secondary-color);
-    text-decoration: none;
+@import '../app/variables.scss';
 
+.logo {
+    font-size: 2.3rem;
+    line-height: 2rem;
+    font-weight: 900;
+    color: var(--primary-color);
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    @media (max-width: $mobile-breakpoint) {
+        font-size: 1.5rem;
+        line-height: 1.5rem;
+    }
     span {
         display: inline-block;
-        transition: transform 0.3s ease-in-out;
+        
+        transition: transform 0.2s ease-in-out;
     }
 
     span {
         &:nth-child(2),
         &:nth-child(4) {
             transform-origin: left;
-            transition: transform 0.3s ease-in-out, opacity 0.2s ease-in-out;
+            transition: transform 0.2s ease-in-out, opacity 0.1s ease-in-out;
             opacity: 1;
         }
 
 
     }
-
+    .underline {
+        position: absolute;
+        bottom: 0;
+        left:0;
+        transform-origin: left;
+        transition: transform 0.2s ease-in-out;
+        @media (max-width: $mobile-breakpoint) {
+            bottom: 5px;
+        }
+    }
     &.contracted {
-        span {
+        span span {
             &:nth-child(2) {
                 transform: scaleX(0);
                 opacity: 0;
@@ -32,7 +53,11 @@
             }
 
         }
+        .underline {
+            transform: translateY(-2rem) scaleX(0.3) scaleY(0.5);
+        }
     }
+    
 }
 
 .header {
@@ -44,4 +69,7 @@
     left: 0;
     width: 100%;
     z-index: 998;
+    @media (max-width: $mobile-breakpoint) {
+        
+    }
 }

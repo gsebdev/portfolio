@@ -1,0 +1,35 @@
+@import '../app/variables.scss';
+
+.skills {
+    .container {
+        padding: 150px;
+        max-width: $large-max-width;
+        overflow: hidden;
+        margin: 0 auto;
+    }
+    .skillsContainer {
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        justify-items: center;
+        gap: 20px;
+
+        >div {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            svg {
+                width: 100%;
+                max-width: 100px;
+                color: var(--primary-color);
+            }
+
+            h3 {
+                color: white;
+                font-size: 1.5rem;
+                text-align: center;
+                margin: 10px 0;
+            }
+        }
+
+    }
+}

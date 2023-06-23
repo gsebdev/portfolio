@@ -31,7 +31,7 @@ const TimeLine: React.FC<TimeLineProps> = ({ timelineElements }) => {
             onMouseLeave={() => { setActiveElement(null) }}
         >
             {
-                timelineElements.map(({ color = 'white', title, content, time }, index) => {
+                timelineElements.map(({ color = 'blue', title, content, time }, index) => {
 
                     const reverse = index % 2 === 0 ? true : false
 

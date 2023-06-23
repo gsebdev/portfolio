@@ -1,3 +1,5 @@
+@import '../app/variables.scss';
+
 .menu {
     position: relative;
     height: fit-content;
@@ -54,7 +56,10 @@
     transition: opacity 0.3s ease-in-out, height 0.3s ease-in-out, width 0.3s ease-in-out;
     display: flex;
     visibility: hidden;
-    
+    @media (max-width: $mobile-breakpoint) {
+        position: fixed;
+        height: 100vh;
+    }
 }
 .navigation > * {
     visibility: hidden;

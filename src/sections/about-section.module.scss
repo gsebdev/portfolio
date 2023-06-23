@@ -1,0 +1,100 @@
+@import '../app/variables.scss';
+
+.about {
+    box-sizing: border-box;
+    color: white;
+    min-height: 60vh;
+    .container {
+        max-width: $large-max-width;
+        overflow: hidden;
+        padding: 100px 150px;
+        display: flex;
+        margin: 0 auto;
+
+        &>div {
+            width: 50%;
+            padding: 0 100px;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out 0.2s;
+
+            &:nth-child(2) {
+                color: var(--primary-color);
+
+                h2 {
+                    color: var(--primary-color);
+                }
+            }
+        }
+    }
+
+    h2 {
+        margin-bottom: 2rem;
+    }
+
+    .formation {
+        ul {
+            .icon {
+                display: inline-block;
+                margin: 0.2rem 1rem 0 0;
+                font-size: 1.5rem;
+            }
+
+            li {
+                display: flex;
+                margin: 1rem 0;
+
+                h3 {
+                    font-weight: 700;
+                    font-size: 1.3rem;
+                }
+
+                p {
+                    span {
+                        opacity: 0.7;
+                    }
+                }
+            }
+        }
+    }
+
+    &.active {
+        &>div {
+            opacity: 1;
+        }
+    }
+}
+
+.cta {
+    border: 1px solid var(--secondary-color);
+    padding: 1rem 2rem;
+    color: var(--secondary-color);
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+    font-size: 1rem;
+    margin: 1rem 0;
+    position: relative;
+    z-index: 1;
+
+    &::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s cubic-bezier(0, 0.5, 0, 1);
+        background-color: var(--secondary-color);
+        z-index: -1
+    }
+
+    &:hover,
+    &:focus {
+        color: var(--primary-color);
+
+        &::before {
+            transform: scaleX(1);
+        }
+    }
+}

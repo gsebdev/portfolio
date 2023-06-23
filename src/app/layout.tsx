@@ -1,9 +1,8 @@
 
-import './globals.css'
+import './globals.scss'
 import { PropsWithChildren, useMemo } from 'react'
 import { HeaderContextProvider } from '@/context'
 import Header from '@/components/Header'
-
 
 export const metadata = {
   title: 'Sébastien GAULT',
@@ -21,7 +20,7 @@ const RootLayout: React.FC<PropsWithChildren> = ({ children }) => {
       name: 'Portfolio',
     },
     {
-      href: '/ccc',
+      href: {pathname: '/', query: {section: 'contact'}},
       name: 'Contact'
     }
   ], [])

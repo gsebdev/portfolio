@@ -1,0 +1,41 @@
+@import '../app/variables.scss';
+
+.story {
+    box-sizing: border-box;
+    font-size: 1.2rem;
+    color: white;
+    transition: opacity 0.3s ease-in-out;
+    background-color: red;
+    min-height: 60vh;
+    .container {
+        max-width: $large-max-width;
+        padding: 150px;
+        overflow: hidden;
+        margin: 0 auto;
+        
+        &>div {
+            height: 100%;
+        }
+    }
+
+    &.active {
+        .container {
+            &>div {
+                animation: rebound 0.3s ease-in-out 0.3s backwards;
+            }
+        }
+    }
+}
+
+
+@keyframes rebound {
+    0% {
+        transform: translateY(25px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
