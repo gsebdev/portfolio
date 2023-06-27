@@ -1,29 +1,17 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@import '../assets/fonts/style.css';
-
-:root {
-  --primary-color: #00499c;
-  --secondary-color: #65ff82;
-  --primary-text-color: white;
-  --primary-bg-color: var(--primary-color);
-  --secondary-bg-color: var(--secondary-color);
-}
-
+@import '../assets/fonts/red_hat_display/red_hat_display_VF.css';
+@import './variables.scss';
 body {
-  font-family: 'SF Old Republic';
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(to bottom,
-      transparent,
-      rgb(var(--background-end-rgb)));
-  background-repeat: no-repeat;
-  background-size: 100%;
+  font-family: 'Red Hat Display';
+  position: relative;
+  margin: 0;
+  color: $primary-color;
 }
-
-h1 {
-  font-size: 3rem;
-  color: var(--primary-text-color);
-  font-weight: 700;
+* {
+  box-sizing: border-box;
+}
+.text-overline-gradient {
+    display: inline-block;
+    background: linear-gradient(to right, $secondary-color, $third-color);
+    padding: 0.1em 1em 0.1em 0.2em;
+    margin: 0 0 0.2em -0.2em;
 }

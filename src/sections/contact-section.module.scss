@@ -1,7 +1,7 @@
 @import '../app/variables.scss';
 
 .contact {
-    background-color: green;
+    background-color: lighten($primary-bg-color, 10%);
     min-height: 60vh;
     .container {
         max-width: $large-max-width;

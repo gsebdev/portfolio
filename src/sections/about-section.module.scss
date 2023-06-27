@@ -4,6 +4,7 @@
     box-sizing: border-box;
     color: white;
     min-height: 60vh;
+    background-color: $primary-bg-color;
     .container {
         max-width: $large-max-width;
         overflow: hidden;
@@ -18,10 +19,10 @@
             transition: opacity 0.3s ease-in-out 0.2s;
 
             &:nth-child(2) {
-                color: var(--primary-color);
+                color: $primary-color;
 
                 h2 {
-                    color: var(--primary-color);
+                    color: $primary-color;
                 }
             }
         }
@@ -91,7 +92,7 @@
 
     &:hover,
     &:focus {
-        color: var(--primary-color);
+        color: $primary-color;
 
         &::before {
             transform: scaleX(1);

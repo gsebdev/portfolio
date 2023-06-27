@@ -9,60 +9,75 @@ import logoJavascript from '../assets/img/logo-javascript.svg'
 import logoRedux from '../assets/img/logo-redux.svg'
 import logoFigma from '../assets/img/logo-figma.svg'
 import logoNext from '../assets/img/logo-nextjs.svg'
+import logoHtml from '../assets/img/html-logo.svg'
+import logoSass from '../assets/img/sass-logo.svg'
+import logoCss from '../assets/img/css-logo.svg'
+interface Skill {
+    name: string
+    logo: React.FC
+}
 
-const skills = [
-    {
-        name: 'Symfony',
-        content: '',
-        logo: logoSymfony
-    },
-    {
-        name: 'PHP',
-        content: '',
-        logo: logoPhp
-    },
-    {
-        name: 'Javascript',
-        content: '',
-        logo: logoJavascript
-    },
-    {
-        name: 'Typescript',
-        content: '',
-        logo: logoTypescript
-    },
-    {
-        name: 'React JS',
-        content: '',
-        logo: logoReact
-    },
-    {
-        name: 'Next JS',
-        content: '',
-        logo: logoNext
-    },
-    {
-        name: 'Redux',
-        content: '',
-        logo: logoRedux
-    },
-    {
-        name: 'Git',
-        content: '',
-        logo: logoGit
-    },
-    {
-        name: 'GitHub',
-        content: '',
-        logo: logoGithub
-    },
-    {
-        name: 'Figma',
-        content: '',
-        logo: logoFigma
-    }
+const skills: Record<string, Skill[]> = {
+    Frontend: [
+        {
+            name: 'HTML5',
+            logo: logoHtml
+        },
+        {
+            name: 'CSS3',
+            logo: logoCss
+        },
+        {
+            name: 'SASS',
+            logo: logoSass
+        },
+        {
+            name: 'Javascript',
+            logo: logoJavascript
+        },
+        {
+            name: 'Typescript',
+            logo: logoTypescript
+        },
+        {
+            name: 'React.JS',
+            logo: logoReact
+        },
+        {
+            name: 'Next.JS',
+            logo: logoNext
+        },
+        {
+            name: 'Redux',
+            logo: logoRedux
+        },
+    ],
+    Backend: [
+        {
+            name: 'Symfony',
+            logo: logoSymfony
+        },
+        {
+            name: 'PHP',
+            logo: logoPhp
+        },
+    ],
+    Outils: [
+        {
+            name: 'Git',
+            logo: logoGit
+        },
+        {
+            name: 'GitHub',
+            logo: logoGithub
+        },
+        {
+            name: 'Figma',
+            logo: logoFigma
+        }
+    ]
+}
 
-]
 interface SkillsSectionProps {
     id?: string
     active?: boolean
@@ -74,12 +89,22 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({ id, active = false }) => 
                 <h2>Mes Skills</h2>
                 <div className={styles.skillsContainer}>
                     {
-                        skills.map((skill, index) => {
+                        Object.keys(skills).map((skillSection, index) => {
                             return (
-                                <div key={skill.name + index}>
-                                    <skill.logo />
-                                    <h3>{skill.name}</h3>
-
+                                <div key={skillSection + index} className={styles.skillSection}>
+                                    <h3 className='text-overline-gradient'>{skillSection}.</h3>
+                                    <ul>
+                                        {
+                                            skills[skillSection].map((skill, index) => {
+                                                return (
+                                                    <li key={skill.name + index}>
+                                                        <skill.logo />
+                                                        <h4>{skill.name}</h4>
+                                                    </li>
+                                                )
+                                            })
+                                        }
+                                    </ul>
                                 </div>
                             )
                         })

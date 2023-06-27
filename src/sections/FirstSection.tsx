@@ -12,7 +12,7 @@ const FirstSection: React.FC<SectionProps> = ({ id, active = false }) => {
     return (
         <section id={id} className={`${styles.section} ${active ? styles.active : ''}`}>
             <div className={styles.container}>
-                <h1>Développeur<br />Frontend.</h1>
+                <h1><span className='text-overline-gradient'>Développeur Web.</span><br />Pour que votre idée<br />devienne réalité</h1>
                 <div className={styles.portrait}>
                     <Image
                         src={portrait}
