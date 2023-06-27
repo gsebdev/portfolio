@@ -27,7 +27,7 @@
     height: 2px;
     width: 100%;
     transition: transform 0.4s cubic-bezier(0.5, 0, 0, 1), opacity 0.2s cubic-bezier(0.5, 0, 0, 1), background-color 0.3s ease-in-out;
-    background-color: var(--primary-color);
+    background-color: $primary-color;
     &.inverted {
         background-color: var(--secondary-color);
     }
@@ -36,7 +36,7 @@
     width: 70%;
 }
 .burger.open .lines {
-    background-color: var(--primary-color);
+    background-color: $primary-color;
 }
 .burger.open .lines:nth-child(2) {
     opacity: 0;
@@ -78,7 +78,7 @@
     transition: opacity 0.3s ease-in-out;
     font-weight: 500;
     font-size: 1.5rem;
-    color: var(--primary-color)
+    color: $primary-color
 }
 .navigation a {
     position: relative;
@@ -90,7 +90,7 @@
     left: 0;
     width: 100%;
     height: 2px;
-    background-color: var(--primary-color);
+    background-color: $primary-color;
     opacity: 0;
     transition: opacity 0.8s ease, transform 0.3s ease;
     transform: translateX(50%);

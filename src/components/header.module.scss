@@ -4,7 +4,7 @@
     font-size: 2em;
     line-height: calc(1em + 5px);
     font-weight: 900;
-    color: var(--primary-color);
+    color: $primary-color;
     text-decoration: none;
     display: flex;
     flex-direction: column;
@@ -18,7 +18,7 @@
         left: 0;
         height: 5px;
         width: 130%;
-        background-color: rgba($secondary-color, 0.3);
+        background: linear-gradient(to right, $secondary-color, $primary-bg-color);
         transition: transform 0.2s ease-in-out;
         transform-origin: left;
         @media (max-width: $mobile-breakpoint) {
@@ -47,17 +47,6 @@
             transition: transform 0.2s ease-in-out, opacity 0.1s ease-in-out;
             opacity: 1;
         }
-    }
-
-    .underline {
-        color: $secondary-color;
-        width: 100%;
-        display: block;
-        position: absolute;
-        bottom: -5px;
-        left: 0;
-        transform-origin: left;
-        transition: transform 0.2s ease-in-out;
     }
 
     &.contracted {
