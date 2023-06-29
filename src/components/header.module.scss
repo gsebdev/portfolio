@@ -17,7 +17,7 @@
         top: calc(50% - 2.5px);
         left: 0;
         height: 5px;
-        width: 130%;
+        width: 150%;
         background: linear-gradient(to right, $secondary-color, $primary-bg-color);
         transition: transform 0.2s ease-in-out;
         transform-origin: left;
@@ -51,7 +51,7 @@
 
     &.contracted {
         &::after{
-            transform: scaleX(0.1);
+            transform: scaleX(0.2);
         }
         span span {
 

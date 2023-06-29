@@ -18,11 +18,8 @@ interface TimeLineProps {
 const TimeLine: React.FC<TimeLineProps> = ({ timelineElements }) => {
     const [activeElement, setActiveElement] = useState<number | null>(null)
 
-    //calc element width function of length of elements
-    const elementWidthPercent = useMemo(() => 100 / timelineElements.length, [timelineElements])
-
     // function to get the opacity value function of index position and legnth to make a gradient
-    const getOpacity = useCallback((index: number) => 1 - ((timelineElements.length - index) * (0.6 / timelineElements.length)), [timelineElements])
+    const getOpacity = useCallback((index: number) => 0.6 - (index * 0.8 / timelineElements.length), [timelineElements])
 
     return (
         <ul
@@ -31,7 +28,7 @@ const TimeLine: React.FC<TimeLineProps> = ({ timelineElements }) => {
             onMouseLeave={() => { setActiveElement(null) }}
         >
             {
-                timelineElements.map(({ color = 'blue', title, content, time }, index) => {
+                timelineElements.map(({ title, content, time }, index) => {
 
                     const reverse = index % 2 === 0 ? true : false
 
@@ -40,20 +37,18 @@ const TimeLine: React.FC<TimeLineProps> = ({ timelineElements }) => {
                             tabIndex={0}
                             key={index + title + 'timeline123456789'}
                             className={`${styles.element} ${reverse ? styles.reverse : ''} ${activeElement === index ? styles.active : ''}`}
-                            style={{
-                                width: `${elementWidthPercent}%`,
-                                opacity: `${activeElement === null ? getOpacity(index) : activeElement === index ? '1' : '0.2'}`
-                            }}
                             onMouseOver={() => { setActiveElement(index) }}
                             onFocus={() => { setActiveElement(index) }}
                         >
-                            <div className={styles.text}>
-                                <h3 className={styles.title}>{title}</h3>
-                                <p className={styles.time}>{time}</p>
-                            </div>
+                            <p className={styles.time}>{time}</p>
+                            <h3 className={styles.title}>{title}</h3>
                             <p className={styles.content}>{content}</p>
-                            <div className={styles.arrow} style={{ background: color }}></div>
-                            <span className={styles.line}></span>
+                            <div 
+                                className={styles.opacityMask}
+                                style={{
+                                    opacity: `${activeElement === null ? getOpacity(index) : activeElement === index ? '0' : '0.8'}`
+                                }}
+                            />
                         </li>
                     )
                 })

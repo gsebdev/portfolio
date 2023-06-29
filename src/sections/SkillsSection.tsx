@@ -86,13 +86,13 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({ id, active = false }) => 
     return (
         <section id={id} className={`${styles.skills} ${active ? styles.active : ''}`}>
             <div className={styles.container}>
-                <h2>Mes Skills</h2>
+                <h2 className='text-overline-gradient'>Mes Skills</h2>
                 <div className={styles.skillsContainer}>
                     {
                         Object.keys(skills).map((skillSection, index) => {
                             return (
                                 <div key={skillSection + index} className={styles.skillSection}>
-                                    <h3 className='text-overline-gradient'>{skillSection}.</h3>
+                                    <h3>{skillSection}.</h3>
                                     <ul>
                                         {
                                             skills[skillSection].map((skill, index) => {

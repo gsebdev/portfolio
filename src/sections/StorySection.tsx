@@ -42,7 +42,7 @@ const StorySection: React.FC<StorySectionProps> = ({ id, active = false }) => {
     return (
         <section id={id} className={`${styles.story} ${active ? styles.active : ''}`}>
             <div className={styles.container}>
-                <h2>Ma Story</h2>
+                <h2 className='text-overline-gradient'>Ma Story</h2>
                 <div>
                     <TimeLine timelineElements={bio} />
                 </div>

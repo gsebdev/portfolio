@@ -7,15 +7,15 @@
     transition: opacity 0.3s ease-in-out;
     background-color: $primary-bg-color;
     min-height: 60vh;
+    text-align: center;
+    h2 {
+        margin-bottom: 80px;
+    }
     .container {
         max-width: $large-max-width;
         padding: 150px;
         overflow: hidden;
         margin: 0 auto;
-
-        &>div {
-            height: 100%;
-        }
     }
 
     &.active {

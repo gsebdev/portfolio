@@ -1,5 +1,14 @@
 @import '../assets/fonts/red_hat_display/red_hat_display_VF.css';
 @import './variables.scss';
+
+:root {
+  --primary-color: white;
+  --secondary-color: rgb(166, 78, 255);
+  --third-color: rgb(56, 149, 255);
+  --primary-bg-color: rgb(23, 0, 45);
+  --secondary-bg-color: rgb(55, 0, 107);
+}
+
 body {
   font-family: 'Red Hat Display';
   position: relative;

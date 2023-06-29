@@ -4,6 +4,7 @@
     position: relative;
     height: fit-content;
 }
+
 .burger {
     height: 80px;
     width: 80px;
@@ -16,6 +17,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: end;
+
     @media (max-width: $mobile-breakpoint) {
         height: 50px;
         width: 50px;
@@ -23,33 +25,38 @@
     }
 
 }
+
 .burger .lines {
     height: 2px;
     width: 100%;
     transition: transform 0.4s cubic-bezier(0.5, 0, 0, 1), opacity 0.2s cubic-bezier(0.5, 0, 0, 1), background-color 0.3s ease-in-out;
     background-color: $primary-color;
+
     &.inverted {
         background-color: var(--secondary-color);
     }
 }
+
 .burger .lines:nth-child(2) {
     width: 70%;
 }
-.burger.open .lines {
-    background-color: $primary-color;
-}
+
 .burger.open .lines:nth-child(2) {
     opacity: 0;
     transform: translateX(-50px);
 }
+
 .burger.open .lines:nth-child(1) {
     transform: translateY(15px) rotate(45deg);
+
     @media (max-width: $mobile-breakpoint) {
         transform: translateY(12px) rotate(45deg);
     }
 }
+
 .burger.open .lines:nth-child(3) {
     transform: translateY(-12px) rotate(-45deg);
+
     @media (max-width: $mobile-breakpoint) {
         transform: translateY(-10px) rotate(-45deg);
     }
@@ -66,67 +73,88 @@
     transition: opacity 0.3s ease-in-out, height 0.3s ease-in-out, width 0.3s ease-in-out;
     display: flex;
     visibility: hidden;
+
     @media (max-width: $mobile-breakpoint) {
         position: fixed;
         height: 100vh;
         width: auto;
     }
-}
-.navigation > * {
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-    font-weight: 500;
-    font-size: 1.5rem;
-    color: $primary-color
-}
-.navigation a {
-    position: relative;
-}
-.navigation a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: $primary-color;
-    opacity: 0;
-    transition: opacity 0.8s ease, transform 0.3s ease;
-    transform: translateX(50%);
-}
-.navigation a:hover::after {
-    opacity: 0.3;
-    transform: translateX(0%);
-}
-.navigation::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    transition: 0.3s;
-    width: 100%;
-    height: 100%;
-    background-color: #ffffff;
-    transform-origin: top right;
-    z-index: -1;
-    transform: scale(0);
-    opacity: 0;
-    box-shadow: 0 10px 53px 0 rgba(0, 0, 0, 0.1);
-}
-.navigation.open {
-    visibility: visible;
-}
-.navigation.open > * {
-    visibility: visible;
-    opacity: 1;
-    animation: appear 0.5s ease 0.1s both;
-}
-.navigation.open::before {
-    transform: scale(1);
-    opacity: 1;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        transition: 0.3s;
+        width: 100%;
+        height: 100%;
+        background-color: var(--secondary-bg-color);
+        transform-origin: top right;
+        z-index: -1;
+        transform: scale(0);
+        opacity: 0;
+        //box-shadow: 0 10px 53px 0 rgba(255, 255, 255, 0.1);
+        border: 1px solid var(--secondary-color)
+    }
+
+    &>* {
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+        font-weight: 500;
+        font-size: 1.5rem;
+        color: $primary-color;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+
+        a {
+            position: relative;
+            line-height: 1.5em;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+
+            &::after {
+                content: '';
+                position: absolute;
+                top: calc(50% - 0.6em);
+                left: 0;
+                width: 130%;
+                height: 1.2em;
+                background: linear-gradient(to right, var(--secondary-color), var(--third-color));
+                opacity: 0;
+                transition: opacity 0.3s ease, transform 0.3s ease;
+                transform: translateX(-40px);
+                z-index: -1;
+
+            }
+
+            &:hover::after {
+                opacity: 0.8;
+                transform: translateX(0);
+            }
+        }
+    }
+
+    &.open {
+        visibility: visible;
+
+        &>* {
+            visibility: visible;
+            opacity: 1;
+            animation: appear 0.5s ease 0.1s both;
+        }
+
+        &::before {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
 }
 
 @keyframes appear {
@@ -134,12 +162,14 @@
         transform: translateY(1em);
         opacity: 0;
     }
+
     50% {
         transform: translateY(0);
         opacity: 0.5;
     }
+
     100% {
         opacity: 1;
     }
-    
+
 }

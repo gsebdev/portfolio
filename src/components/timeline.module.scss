@@ -4,117 +4,62 @@ $spacing-offset: 3px;
 
 //timeline ul container
 .timeline {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    height: 100%;
+    list-style: none;
+    padding-left: 0;
+    max-width: 1024px;
+    margin: 0 auto;
+    position: relative;
+    &:before {
+        content: '';
+        position: absolute;
+        height: 100%;
+        width: 16px;
+        top: 0;
+        left: calc(50% - 8px);
+        background-image: linear-gradient(0deg, transparent, transparent 50%, var(--primary-bg-color) 50%, var(--primary-bg-color) 100%), linear-gradient(180deg, var(--secondary-color), var(--third-color) 70%, var(--primary-bg-color) 100%);
+        background-size: 100% 25px, 100% 100%;
+    }
 }
 
 // li element for each timeline element
 .element {
+    width: 100%;
+    min-height: 150px;
+    padding-right: calc(50% + 30px);
+    padding-top: 10px;
     position: relative;
-    transition: opacity 0.3s ease-in-out;
-    cursor: pointer;
-
-    // title and date container
-    .text {
-        width: calc(100% - ($spacing-offset * 4));
-        display: flex;
-        flex-direction: column;
+    transition: opacity 0.5s ease-in-out;
+    &::before {
+        content: '';
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
         position: absolute;
-        bottom: calc(50% + $arrow-height);
-        left: $spacing-offset * 2
+        top: 0;
+        left: calc(50% - 10px);
+        background-color: var(--primary-color);
     }
-
-    // timeline arrow
-    .arrow {
-        height: $arrow-height;
+    .opacityMask {
+        position: absolute;
         width: 100%;
-        clip-path: polygon(90% 0, 100% 50%, 90% 100%, 0% 100%, 10% 50%, 0% 0%);
-        position: absolute;
-        top: calc(50% - ($arrow-height / 2));
-        transition: transform 0.3s ease-in-out;
-
-    }
-
-    // line with 2 dots in each element
-    .line {
-        width: 2px;
-        background-color: var(--secondary-bg-color);
-        position: absolute;
-        top: 50%;
-        left: calc(50% + ($spacing-offset * 2) - 1px);
-        height: 20%;
-        transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
-        transform-origin: top;
-
-        &::after {
-            content: '';
-            width: 10px;
-            height: 10px;
-            position: absolute;
-            left: calc(50% - 5px);
-            top: -5px;
-            border-radius: 50%;
-            background-color: var(--secondary-bg-color);
-        }
-
-        &::before {
-            content: '';
-            width: 10px;
-            height: 10px;
-            position: absolute;
-            left: calc(50% - 5px);
-            bottom: -5px;
-            border-radius: 50%;
-            background-color: var(--secondary-bg-color);
-        }
-    }
-
-    // text content appearing when focus and hover
-    .content {
-        opacity: 0;
-        font-weight: 400;
-        position: absolute;
-        top: calc(50% + $arrow-height);
+        height: 100%;
+        background-color: var(--primary-bg-color);
+        top: 0;
         left: 0;
-        z-index: 3;
-        margin: 0.5rem;
-        padding: 0.5rem;
-        transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+        opacity: 0.5;
+        transition: opacity 0.3s ease-in-out;
     }
-    &.active {
-        .content {
-            opacity: 1;
-            animation: slideInBound 0.3s ease-in-out both;
-        }
-        .line {
-            transform: scaleY(0);
-        }
+    cursor: pointer;
+    text-align: right;
+    
+    .content, h3, p {
+        margin: 0;
     }
     // reverse class for odd elements in the list
     &.reverse {
-        .content {
-            bottom: calc(50% + $arrow-height);
-            top: unset;
-        }
-
-        .text {
-            flex-direction: column-reverse;
-            top: calc(50% + $arrow-height);
-            bottom: unset;
-
-        }
-
-        .line {
-            bottom: 50%;
-            top: unset;
-            transform-origin: bottom;
-        }
-    }
-
-    &:nth-child(n+2) {
-        margin-left: -1 * $spacing-offset;
+            text-align: left;
+            padding-right: unset;
+            padding-left: calc(50% + 30px);
     }
 
     &:focus-visible {
@@ -125,28 +70,10 @@ $spacing-offset: 3px;
 .time {
     font-size: 2rem;
     font-weight: 700;
-    color: var(--secondary-bg-color);
+    color: var(--secondary-color)
 }
 
 .title {
     font-weight: 700;
     font-size: 1.3rem;
-}
-
-@keyframes slideInBound {
-    0% {
-        transform: translateY(-20px);
-    }
-
-    25% {
-        transform: translateY(10px);
-    }
-
-    75% {
-        transform: translateY(-5px);
-    }
-
-    100% {
-        transform: translateY(0);
-    }
 }
