@@ -100,7 +100,7 @@ const useScrollBySection = (container: React.RefObject<HTMLElement>, transitionD
         if (section) {
             const { bottom } = section.getBoundingClientRect()
             //if bottom of the section is visible
-            if (Math.floor(bottom) <= window.innerHeight) {
+            if (Math.floor(bottom) <= window.innerHeight + 1) {
                 setActiveSection(a => Math.min(sections.length - 1, a + 1))
             } else {
                 const scrollTarget = Math.round(window.scrollY + Math.min(window.innerHeight * 0.67, bottom - window.innerHeight))
@@ -114,7 +114,7 @@ const useScrollBySection = (container: React.RefObject<HTMLElement>, transitionD
         if (section) {
             const { top } = section.getBoundingClientRect()
             //if top of the section is visible
-            if (Math.ceil(top) >= 0) {
+            if (Math.ceil(top) >= -1) {
                 setActiveSection(a => Math.max(0, a - 1))
             } else {
                 const scrollTarget = Math.floor(window.scrollY - Math.min(Math.abs(top), window.innerHeight * 0.67))
