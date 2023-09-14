@@ -1,0 +1,62 @@
+@import '../app/variables.scss';
+.background {
+    background-color: var(--primary-bg-color);
+    position: fixed;
+    z-index: -1;
+    width: 100%;
+    height: 100vh;
+
+    .element {
+        transition: transform 0.5s cubic-bezier(0.6, 0.3, 0.4, 0.3);
+        position: absolute;
+        opacity: 0.2;
+        height: 320px;
+        width: 320px;
+        top: 0;
+        left: calc(50% - 160px);
+
+        &.element1 {
+            color: var(--secondary-color);
+        }
+
+        &.element2 {
+            color: var(--third-color);
+        }
+    }
+
+    &.position1 {
+        .element {
+            &.element1 {
+                transform: translate(calc(-50vw + 60%), 200px) scale(1.6) rotate(20deg);
+            }
+
+            &.element2 {
+               transform: translate(calc(20vw - 75%), 300px) scale(1.8)  rotate(200deg);
+            }
+        }
+    }
+
+    &.position2 {
+        .element {
+            &.element1 {
+                transform: translate(calc(-50vw + 20%), calc(100vh - 80%)) rotate(-45deg);
+            }
+
+            &.element2 {
+                transform: translate(calc(50vw - 50%), 50px) rotate(140deg) scale(1.3);
+            }
+        }
+    }
+
+    &.position3 {
+        .element {
+            &.element1 {
+                transform: translate(calc(-50vw + 20%), calc(50vh - 50%)) scale(0.7);
+            }
+
+            &.element2 {
+                transform: translate(calc(50vw - 25%), calc(50vh - 50%)) rotate(180deg) scale(0.8);
+            }
+        }
+    }
+}

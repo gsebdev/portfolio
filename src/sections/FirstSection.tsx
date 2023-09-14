@@ -1,7 +1,6 @@
 import Image from "next/image"
 import styles from './first-section.module.scss'
 import portrait from '../assets/img/portrait.jpg'
-import IrregularCircle from '../assets/img/irregular-circle.svg'
 
 interface SectionProps {
     id?: string
@@ -21,9 +20,6 @@ const FirstSection: React.FC<SectionProps> = ({ id, active = false }) => {
                         loading='lazy'
                         sizes="(max-width: 2048px) 30vw, (max-width: 768px) 50vw"
                         placeholder='blur' />
-
-                    <IrregularCircle />
-                    <IrregularCircle />
 
                 </div>
                 <p>J&apos;aime développer des applications avec des expériences utilisateur innovantes et performantes</p>

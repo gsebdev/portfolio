@@ -11,7 +11,7 @@ import SkillsSection from '@/sections/SkillsSection'
 import StorySection from '@/sections/StorySection'
 import AboutSection from '@/sections/AboutSection'
 import ContactSection from '@/sections/ContactSection'
-import { JsxElement } from 'typescript'
+import AnimatedBackground from '@/components/AnimaterdBackground'
 
 //set an array of sections index for inverted nav elements colors  
 const invertedColorsSections = [2]
@@ -27,7 +27,8 @@ const Home: React.FC = () => {
     }, [activeSection, setBurgerInverted])
 
     return (
-        <>
+        <>  
+            <AnimatedBackground positionNumber={activeSection + 1} />
             <VerticalNav
                 items={['Home', 'Skills', 'Story', 'Work & Formations', 'Contact']}
                 callback={(i: number) => { setActiveSection(i) }}
