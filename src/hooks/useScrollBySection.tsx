@@ -10,7 +10,7 @@ interface wheelRunRefProps {
     wheeling: boolean
 }
 
-const useScrollBySection = (container: React.RefObject<HTMLElement>, transitionDuration: number, hideScrollBar: boolean = true, autoScroll: boolean = true): useScrollBySectionReturnProps => {
+const useScrollBySection = (container: React.RefObject<HTMLElement>, transitionDuration: number, hideScrollBar: boolean = true, autoScroll: boolean = true, stopScroll = false): useScrollBySectionReturnProps => {
     const [activeSection, setActiveSection] = useState<number>(0)
     const [sections, setSections] = useState<HTMLElement[]>([])
     const activeSectionRef = useRef<HTMLElement | null>(null)
@@ -55,11 +55,11 @@ const useScrollBySection = (container: React.RefObject<HTMLElement>, transitionD
     //test if section is into viewport
     const isSectionIntoView = useCallback((section: HTMLElement) => {
         const { top, bottom } = section.getBoundingClientRect()
-                    if ((top < 0 && bottom <= 0) || (top >= window.innerHeight)) {  // the section is upper the top of the viewport or is under the viewport
-                        return false
-                    } else {
-                        return (top < (window.innerHeight / 2)) && (bottom > (window.innerHeight / 2)) ? true : false // if the section is more than 50% in the viewwport
-                    }
+        if ((top < 0 && bottom <= 0) || (top >= window.innerHeight)) {  // the section is upper the top of the viewport or is under the viewport
+            return false
+        } else {
+            return (top < (window.innerHeight / 2)) && (bottom > (window.innerHeight / 2)) ? true : false // if the section is more than 50% in the viewwport
+        }
     }, [])
 
     useEffect(() => {
@@ -118,7 +118,6 @@ const useScrollBySection = (container: React.RefObject<HTMLElement>, transitionD
                 setActiveSection(a => Math.max(0, a - 1))
             } else {
                 const scrollTarget = Math.floor(window.scrollY - Math.min(Math.abs(top), window.innerHeight * 0.67))
-                console.log(scrollTarget, top, window.scrollY + top)
                 animateScrollTo(scrollTarget)
             }
         }
@@ -126,6 +125,10 @@ const useScrollBySection = (container: React.RefObject<HTMLElement>, transitionD
 
     //listen for mouse wheel and handle the change of active section
     useEffect(() => {
+       /* if(stopScroll && container.current) {
+            container.current.style.overflow = 'hidden'
+            container.current.style.height = '100vh'
+        }*/
         // Wheel event handler
         const handleWheel = (e: WheelEvent) => {
             e.preventDefault()
@@ -151,7 +154,7 @@ const useScrollBySection = (container: React.RefObject<HTMLElement>, transitionD
             }
             const isDirectionChanging: boolean = !wRun.lastEvent || Math.sign(wRun.lastEvent.deltaY) !== Math.sign(e.deltaY)
             const isWheelingFast: boolean = Math.abs(e.deltaY) >= wRun.maxDeltaValue / 3
-            
+
             if (!isTransition.current && (isDirectionChanging || isWheelingFast)) {
                 switch (Math.sign(e.deltaY)) {
                     case -1:
@@ -191,7 +194,7 @@ const useScrollBySection = (container: React.RefObject<HTMLElement>, transitionD
         }
 
         // Add the event listener
-        if (autoScroll) {
+        if (autoScroll && !stopScroll) {
             document.addEventListener('keydown', handleKeydown)
             document.addEventListener('wheel', handleWheel, { passive: false })
         }
@@ -199,16 +202,13 @@ const useScrollBySection = (container: React.RefObject<HTMLElement>, transitionD
         window.addEventListener('resize', handleWindowResize)
         // When unmouts remove the event listener
         return () => {
-            if (autoScroll) {
-                document.removeEventListener('keydown', handleKeydown)
-                document.removeEventListener('wheel', handleWheel)
-
-            }
+            document.removeEventListener('keydown', handleKeydown)
+            document.removeEventListener('wheel', handleWheel)
             document.removeEventListener('keydown', handleKeydown)
             document.removeEventListener('scroll', handleScroll)
             window.removeEventListener('resize', handleWindowResize)
         }
-    }, [autoScroll, scrollNext, scrollPrev, sections, isSectionIntoView])
+    }, [autoScroll, scrollNext, scrollPrev, sections, isSectionIntoView, stopScroll, container])
 
     return { activeSection, setActiveSection }
 }

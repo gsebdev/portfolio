@@ -1,7 +1,7 @@
 
 import './globals.scss'
 import { PropsWithChildren, useMemo } from 'react'
-import { HeaderContextProvider } from '@/context'
+import { HeaderContextProvider, ScrollContextProvider } from '@/context'
 import Header from '@/components/Header'
 
 export const metadata = {
@@ -20,20 +20,23 @@ const RootLayout: React.FC<PropsWithChildren> = ({ children }) => {
       name: 'Portfolio',
     },
     {
-      href: {pathname: '/', query: {section: 'contact'}},
+      href: { pathname: '/', query: { section: 'contact' } },
       name: 'Contact'
     }
   ], [])
 
   return (
-    <HeaderContextProvider>
+    <ScrollContextProvider>
+      <HeaderContextProvider>
         <html lang="fr">
           <body>
             <Header navLinks={navLinks} />
             {children}
           </body>
         </html>
-    </HeaderContextProvider>
+      </HeaderContextProvider>
+    </ScrollContextProvider>
+
   )
 }
 

@@ -10,28 +10,26 @@
         padding: 100px 150px;
         display: flex;
         margin: 0 auto;
-
-        &>div {
-            width: 50%;
-            padding: 0 100px;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out 0.2s;
-
-            &:nth-child(2) {
-                color: $primary-color;
-
-                h2 {
-                    color: $primary-color;
-                }
-            }
         }
-    }
 
     h2 {
         margin-bottom: 2rem;
     }
 
+    .work, .formation {
+        width: 50%;
+        padding: 0 100px;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out 0.2s;
+    }
+
     .formation {
+        color: $primary-color;
+        
+        h2 {
+            color: $primary-color;
+        }
+
         ul {
             .icon {
                 display: inline-block;
@@ -58,9 +56,12 @@
     }
 
     &.active {
-        &>div {
-            opacity: 1;
+        .container {
+            &>div {
+                opacity: 1;
+            }
         }
+        
     }
 }
 
