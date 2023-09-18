@@ -54,7 +54,7 @@ export default function BurgerMenu({ children, id='main-menu'}: BurgerMenuProps)
 
             <nav 
                 id={id + '-nav'}
-                aria-label='Navigatino menu'
+                aria-label='Navigation menu'
                 ref={navRef} 
                 className={`${styles.navigation} ${isOpen? styles.open : ''}`}
                 onClick={handleMenuClick}
