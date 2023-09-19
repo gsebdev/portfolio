@@ -1,0 +1,137 @@
+@import '../app/variables.scss';
+$max-width: 500px;
+$element-height: 75px;
+
+.question,
+.answer {
+    padding: 20px 40px;
+    border-radius: 15px;
+    position: relative;
+    display: inline-block;
+    font-weight: 700;
+    font-size: 1.3rem;
+    width: $max-width / 1.5;
+    min-height: $element-height;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+
+    &::before {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 0;
+        border: 0.75rem solid transparent;
+    }
+}
+
+.question {
+    background-color: lighten($primary-bg-color, 50%);
+    animation: appearQuestion 0.8s 1s ease-in-out both;
+    align-self: flex-start;
+
+    &::before {
+        bottom: 100%;
+        left: 1.5em;
+        border-bottom: 0.75rem solid lighten($primary-bg-color, 50%);
+    }
+}
+
+.answer {
+    align-self: flex-end;
+    background-color: $third-color;
+    animation: appearAnswer 0.8s ease-in-out;
+
+    &::before {
+        border-top: 0.75rem solid $third-color;
+        top: 100%;
+        right: 1.5em;
+    }
+}
+
+.record-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-container {
+    max-width: $max-width;
+    width: 100%;
+}
+
+.contact-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.answer-form {
+    width: 100%;
+    max-width: $max-width;
+    display: block;
+    position: relative;
+
+    textarea {
+        display: block;
+        background: none;
+        outline: none;
+        border: 1px solid $secondary-color;
+        min-height: $element-height;
+        width: 100%;
+        border-radius: 37px;
+        padding: 20px 75px 20px 20px;
+        resize: none;
+        color: $primary-color;
+        font-size: 1.3rem;
+        font-weight: 700;
+        overflow: hidden;
+    }
+
+    button {
+        border-radius: 50%;
+        width: 55px;
+        height: 55px;
+        display: block;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        overflow: hidden;
+        padding: 0;
+        background-color: $third-color;
+        border: none;
+        color: $primary-color;
+    }
+    &.inactive {
+        opacity: 0.5;
+        filter: grayscale(1);
+    }
+}
+
+@keyframes appearQuestion {
+    0% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+@keyframes appearAnswer {
+    0% {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}

@@ -2,11 +2,26 @@
 
 .contact {
     background-color: lighten($primary-bg-color, 10%);
-    min-height: 60vh;
+    min-height: 100vh;
+    padding-bottom: 200px;
+    padding-top: 100px;
     .container {
         max-width: $large-max-width;
         margin: 0 auto;
-        padding: 150px 150px;
+        padding: 50px 50px;
         overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center ;
+        flex-direction: column;
+    }
+    h2 {
+        width: fit-content;
+    }
+    .subtitle {
+        font-size: 1.5rem;
+        max-width: 500px;
+        text-align: center;
+        font-weight: 300;
     }
 }
