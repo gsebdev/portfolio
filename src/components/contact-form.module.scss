@@ -1,14 +1,16 @@
 @import '../app/variables.scss';
-$max-width: 500px;
+$max-width: 640px;
 $element-height: 75px;
+$button-size: 20%;
+$transition-delay: 0.5s;
 
 .question,
 .answer {
     padding: 20px 40px;
-    border-radius: 15px;
+    //border-radius: 15px;
     position: relative;
     display: inline-block;
-    font-weight: 700;
+    font-weight: 500;
     font-size: 1.3rem;
     width: $max-width / 1.5;
     min-height: $element-height;
@@ -16,6 +18,8 @@ $element-height: 75px;
     justify-content: center;
     align-items: center;
     margin-bottom: 2rem;
+    overflow-wrap: anywhere;
+    white-space: pre-line;
 
     &::before {
         content: '';
@@ -27,10 +31,11 @@ $element-height: 75px;
 }
 
 .question {
-    background-color: lighten($primary-bg-color, 50%);
-    animation: appearQuestion 0.8s 1s ease-in-out both;
+    background: lighten($primary-bg-color, 50%);
+    animation: appearQuestion $transition-delay $transition-delay ease-in-out both;
     align-self: flex-start;
 
+    //box-shadow: 8px 0 0 0 $third-color;
     &::before {
         bottom: 100%;
         left: 1.5em;
@@ -41,8 +46,9 @@ $element-height: 75px;
 .answer {
     align-self: flex-end;
     background-color: $third-color;
-    animation: appearAnswer 0.8s ease-in-out;
+    animation: appearAnswer$transition-delay ease-in-out;
 
+    //box-shadow: 8px 0px 0 0 lighten($primary-bg-color, 50%);
     &::before {
         border-top: 0.75rem solid $third-color;
         top: 100%;
@@ -56,7 +62,7 @@ $element-height: 75px;
 }
 
 .chat-container {
-    max-width: $max-width;
+
     width: 100%;
 }
 
@@ -65,6 +71,16 @@ $element-height: 75px;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    max-width: $max-width;
+    margin: 0 auto;
+}
+
+.reset {
+    align-self: flex-start;
+    color: $primary-color;
+    font-size: 1rem;
+    padding: 10px 0;
+    opacity: 0.8;
 }
 
 .answer-form {
@@ -72,30 +88,46 @@ $element-height: 75px;
     max-width: $max-width;
     display: block;
     position: relative;
+    .info {
+        display: none;
+        position: absolute;
+        bottom: 5px;
+        right: calc(20% + 10px);
+        color: rgba($primary-color, 0.5);
+        font-size: 0.9rem;
+    }
+    &:focus-within {
+        .info {
+            display: block;
+            animation: fadeIn 0.3s 0.3s ease-in-out both;
+        }
+    }
 
     textarea {
+        position: relative;
         display: block;
         background: none;
         outline: none;
         border: 1px solid $secondary-color;
         min-height: $element-height;
         width: 100%;
-        border-radius: 37px;
-        padding: 20px 75px 20px 20px;
+        //border-radius: 37px;
+        padding: 20px calc(20% + 10px) 20px 20px;
         resize: none;
         color: $primary-color;
         font-size: 1.3rem;
-        font-weight: 700;
+        font-weight: 400;
         overflow: hidden;
+        font-family: 'Red Hat Display';
     }
 
     button {
-        border-radius: 50%;
-        width: 55px;
-        height: 55px;
+        //border-radius: 50%;
+        width: $button-size;
+        height: 100%;
         display: block;
         position: absolute;
-        right: 10px;
+        right: 0px;
         top: 50%;
         transform: translateY(-50%);
         overflow: hidden;
@@ -104,6 +136,7 @@ $element-height: 75px;
         border: none;
         color: $primary-color;
     }
+
     &.inactive {
         opacity: 0.5;
         filter: grayscale(1);
@@ -113,7 +146,7 @@ $element-height: 75px;
 @keyframes appearQuestion {
     0% {
         opacity: 0;
-        transform: translateY(-100%);
+        transform: translateY(-30%);
     }
 
     100% {
@@ -126,7 +159,7 @@ $element-height: 75px;
 @keyframes appearAnswer {
     0% {
         opacity: 0;
-        transform: translateY(100%);
+        transform: translateY(30%);
     }
 
     100% {
@@ -134,4 +167,13 @@ $element-height: 75px;
         transform: translateY(0);
     }
 
+}
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+    
 }

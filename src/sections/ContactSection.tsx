@@ -1,5 +1,6 @@
 import ContactForm from '@/components/ContactForm'
 import styles from './contact-section.module.scss'
+import { isEmail, isOnlyLetters } from '@/utils/formValidators'
 
 interface ContactSectionProps {
     id?: string
@@ -8,15 +9,21 @@ interface ContactSectionProps {
 const contactFormEntries = [
     {
         name: 'name',
-        question: 'Quel est votre nom ?'
-    },
-    {
-        name: 'email',
-        question: 'Quel est votre email ?'
+        question: 'Quel est votre nom ?',
+        validators: [{fn: isOnlyLetters, msg: 'Votre nom ne peut contenir que des lettres,\nMerci de réessayer'}]
     },
     {
         name: 'message',
-        question: 'Que vous voulez vous dire ??'
+        question: 'Enchanté [name] !\nQuel est votre message ?',
+    },
+    {
+        name: 'answer',
+        question: 'Quel est votre e-mail pour que je puisse vous répondre ?',
+        validators: [{fn: isEmail, msg: 'Votre e-mail ne semble pas correct,\nMerci de réessayer'}]
+    },
+    {
+        name: 'additionnal',
+        question: 'Voulez ajouter des précisions avant d\'envoyer votre message ?',
     }
 ]
 
@@ -27,7 +34,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({ id, active = false }) =
                 <h2 className='text-overline-gradient'>Contactez-moi !</h2>
                 <p className={styles.subtitle} >Vous avez un question, une proposition ou vous voulez juste faire connaissance ? N&#39;hesitez pas.</p>
             </div>
-            <ContactForm entries={contactFormEntries}/>
+            <ContactForm entries={contactFormEntries} initialMsg='Envie de discuter ?' endMsg="Merci ! J'ai bien reçu votre message, je vous répondrais au plus vite dès que je l'aurai lu ;-)"/>
         </section>
     )
 }
