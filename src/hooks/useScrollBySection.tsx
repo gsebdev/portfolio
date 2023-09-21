@@ -125,10 +125,6 @@ const useScrollBySection = (container: React.RefObject<HTMLElement>, transitionD
 
     //listen for mouse wheel and handle the change of active section
     useEffect(() => {
-       /* if(stopScroll && container.current) {
-            container.current.style.overflow = 'hidden'
-            container.current.style.height = '100vh'
-        }*/
         // Wheel event handler
         const handleWheel = (e: WheelEvent) => {
             e.preventDefault()
@@ -169,7 +165,7 @@ const useScrollBySection = (container: React.RefObject<HTMLElement>, transitionD
         }
 
         const handleKeydown = (e: KeyboardEvent) => {
-            const downKeys = ['Down', 'SpaceBar', ' ', 'ArrowDown', 'PageDown']
+            const downKeys = ['Down', 'ArrowDown', 'PageDown']
             const upKeys = ['Up', 'ArrowUp', 'PageUp']
 
             if (downKeys.includes(e.key)) scrollNext()
