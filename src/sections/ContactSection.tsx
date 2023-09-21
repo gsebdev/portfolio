@@ -1,4 +1,4 @@
-import ContactForm from '@/components/ContactForm'
+import ContactForm from '@/components/contact-form/ContactForm'
 import styles from './contact-section.module.scss'
 import { isEmail, isOnlyLetters } from '@/utils/formValidators'
 

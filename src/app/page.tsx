@@ -15,7 +15,8 @@ import AnimatedBackground from '@/components/AnimaterdBackground'
 
 //set an array of sections index for inverted nav elements colors  
 const invertedColorsSections = [2]
-
+console.log("Hey %cThis is so cool", "background-color: pink; color: black")
+console.log("  /\\_/\\ \n ( o.o )\n  > ^ <");
 const Home: React.FC = () => {
     const mainRef = useRef(null)
     const { stopMainScroll } = useContext(ScrollContext)
