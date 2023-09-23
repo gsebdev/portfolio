@@ -1,29 +1,54 @@
 import styled from 'styled-components'
 
-export const ContactFormContainer = styled.div<{ $maxWidth?: number, $color?: string }>`
-    max-width: ${({ $maxWidth }) => $maxWidth ? $maxWidth + 'px' : '640px'};
+interface ContactFormContainerProps {
+    $maxWidth ?: number
+    $color ?: string
+    $primaryColor: string
+    $secondaryColor: string
+    $transitionDuration?: string
+    $borderRadius?: number
+    $fontFamily?: string
+    $compact?: Boolean
+    $recordHeight?: number
+}
+
+export const ContactFormContainer = styled.div<ContactFormContainerProps>`
+    --primary-color: ${({ $primaryColor }) => $primaryColor};
+    --secondary-color: ${({ $secondaryColor }) => $secondaryColor};
+    --max-width: ${({ $maxWidth }) => $maxWidth ? $maxWidth + 'px' : '640px'};
+    ${({ $fontFamily }) => $fontFamily ? `--font: '${$fontFamily}';` : ''}
+    --color: ${({ $color }) => $color ?? 'inherit'};
+    --border-radius: ${({ $borderRadius }) => $borderRadius ? $borderRadius + 'px' : '0px'};
+    --transition-duration: ${({ $transitionDuration }) => $transitionDuration ?? '0.5s'};
+    --compact: ${({ $compact }) => $compact ? 'row' : 'column'};
+    --record-height: ${({ $recordHeight }) => $recordHeight ? $recordHeight + 'px' : '75px'};
+    font-family: var(--font, inherit);
+    max-width: var(--max-width);
     margin: 0 auto;
-    color: ${({ $color }) => $color ?? 'white'};
+    color: var(--color);
     .reset {
-        color: ${({ $color }) => $color ?? 'white'};
-        align-self: flex-start;
+        display: block;
+        color: var(--color);
         font-size: 1rem;
         padding: 10px 0;
         opacity: 0.8;
+        @media(max-width: 768px) {
+            text-align: center;
+        }
     }
 `
-export const RecordContainer = styled.div<{ $compact?: Boolean }>`
+export const RecordContainer = styled.div`
     display: flex;
-    flex-direction: ${({ $compact }) => $compact ? 'row' : 'column'};
+    flex-direction: var(--compact);
 `
-const Record = styled.span<{ $maxWidth?: number, $recordHeight?: number, $borderRadius?: number, $bgColor?: string, $transitionDuration?: string }>`
+const Record = styled.span`
     padding: 20px 40px;
-    border-radius: ${({ $borderRadius }) => $borderRadius ? $borderRadius + 'px' : '0px'};
+    border-radius: var(--border-radius);
     position: relative;
     font-weight: 500;
     font-size: 1.3rem;
-    width: ${({ $maxWidth }) => $maxWidth ? ($maxWidth / 1.5) + 'px' : (640 / 1.5) + 'px'};
-    min-height: ${({ $recordHeight }) => $recordHeight ? $recordHeight + 'px' : '75px'};
+    width: calc(var(--max-width) / 2);
+    min-height: var(--record-height);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -38,16 +63,21 @@ const Record = styled.span<{ $maxWidth?: number, $recordHeight?: number, $border
         height: 0;
         border: 0.75rem solid transparent;
     }
+    @media(max-width: 768px) {
+        padding: 10px 20px;
+        max-width: calc(100vw / 1.5);
+    }
+
 `
 export const Question = styled(Record)`
-    background: ${({ $bgColor }) => $bgColor ?? 'darkmagenta'};
-    animation: appearQuestion ${({ $transitionDuration }) => $transitionDuration ? $transitionDuration + ' ' + $transitionDuration : '0.3s 0.3s'} ease-in-out both;
+    background: var(--primary-color);
+    animation: appearQuestion var(--transition-duration) var(--transition-duration) ease-in-out both;
     align-self: flex-start;
 
     &::before {
         bottom: calc(100% - 1px);
-        left: 1.5em;
-        border-bottom: 0.75rem solid ${({ $bgColor }) => $bgColor ?? 'darkmagenta'};
+        left: calc(1.5em + var(--border-radius) / 2);
+        border-bottom: 0.75rem solid var(--primary-color);
     }
     @keyframes appearQuestion {
         0% {
@@ -64,13 +94,13 @@ export const Question = styled(Record)`
 `
 export const Answer = styled(Record)`
     align-self: flex-end;
-    background: ${({ $bgColor }) => $bgColor ?? 'blueviolet'};
-    animation: appearAnswer ${({ $transitionDuration }) => $transitionDuration ?? '0.3s'} ease-in-out;
+    background: var(--secondary-color);
+    animation: appearAnswer var(--transition-duration) ease-in-out both;
 
     &::before {
-        border-top: 0.75rem solid ${({ $bgColor }) => $bgColor ?? 'blueviolet'};
+        border-top: 0.75rem solid var(--secondary-color);
         top: calc(100% - 1px);
-        right: 1.5em;
+        right: calc(1.5em + var(--border-radius) / 2);
     }
     @keyframes appearAnswer {
         0% {
@@ -87,16 +117,10 @@ export const Answer = styled(Record)`
 `
 interface ChatFormProps {
     $isInactive?: Boolean
-    $fontFamily?: string
     $minHeight?: number
     $maxWidth?: number
-    $color?: string
-    $bgColor?: string
-    $buttonColor?: string
-    $buttonBgColor?: string
     $borderRadius?: number
-    $borderColor?: string
-    $buttonHoverColor?: string
+
 }
 
 export const ChatForm = styled.form<ChatFormProps>`
@@ -106,6 +130,7 @@ export const ChatForm = styled.form<ChatFormProps>`
     display: block;
     position: relative;
     overflow: hidden;
+    margin: 0 auto;
     ${({ $isInactive }) => $isInactive ? 'opacity: 0.5; filter: grayscale(1);' : ''}
     
     .info {
@@ -113,7 +138,7 @@ export const ChatForm = styled.form<ChatFormProps>`
         position: absolute;
         bottom: 5px;
         right: calc(20% + 10px);
-        ${({ $color }) => $color ? 'color: ' + $color + ';' : ''}
+        color: var(--color);
         font-size: smaller;
     }
     &:focus-within {
@@ -133,17 +158,18 @@ export const ChatForm = styled.form<ChatFormProps>`
     textarea {
         position: relative;
         display: block;
-        background: ${({ $bgColor }) => $bgColor ?? '#310060'};
+        background: transparent;
         outline: none;
-        border: 1px solid ${({ $borderColor }) => $borderColor ?? 'blueviolet'};
-        min-height: ${({ $minHeight }) => $minHeight ? $minHeight + 'px' : 'blueviolet'};
+        border-radius: ${({ $borderRadius }) => $borderRadius ? $borderRadius + 'px' : '0px'};
+        border: 1px solid var(--primary-color);
+        min-height: ${({ $minHeight }) => $minHeight ? $minHeight + 'px' : '75px'};
         width: 100%;
         padding: 20px calc(20% + 10px) 20px 20px;
         resize: none;
-        color: ${({ $color }) => $color ?? 'white'};
+        color: var(--color);
         font-size: 1.3rem;
         overflow: hidden;
-        font-family: '${({ $fontFamily }) => $fontFamily}';
+        font-family: var(--font, inherit);
     }
 
     button {
@@ -157,9 +183,9 @@ export const ChatForm = styled.form<ChatFormProps>`
         transform: translateY(-50%);
         overflow: hidden;
         padding: 0;
-        background-color: ${({ $buttonBgColor }) => $buttonBgColor ?? 'blueviolet'};
+        background-color: var(--secondary-color);
         border: none;
-        color: ${({ $color }) => $color ?? 'white'};
+        color: var(--color);
         &::before {
             position: absolute;
             top: 0;
@@ -167,7 +193,7 @@ export const ChatForm = styled.form<ChatFormProps>`
             width: 100%;
             height: 100%;
             content: '';
-            background: linear-gradient(to left, ${({ $buttonBgColor }) => $buttonBgColor ?? 'blueviolet'}, ${({ $buttonHoverColor }) => $buttonHoverColor ?? 'darkmagenta'} );
+            background: linear-gradient(to left, var(--secondary-color), var(--primary-color) );
             transform: scaleX(0.5);
             transform-origin: left;
             transition: transform 0.3s ease, opacity 0.3s ease-in-out;
@@ -180,5 +206,8 @@ export const ChatForm = styled.form<ChatFormProps>`
                 opacity: 1;
             }
         }
+    }
+    @media(max-width: 768px) {
+        max-width: calc(100vw - 20px);
     }
 `

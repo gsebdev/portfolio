@@ -8,8 +8,9 @@ export interface Record {
 type chatHistoryState = {
     activeStep: number,
     entries: Record[],
-    inactiveInput: Boolean,
+    isEnd: Boolean,
     sent: Boolean,
+    isError?: string,
     init: Record[]
 }
 
@@ -21,74 +22,78 @@ type chatHistoryAction = {
 const formReducer = (state: chatHistoryState, action: chatHistoryAction) => {
     try {
         switch (action.type) {
-            case 'SET_INACTIVE': {
-                return {
-                    ...state,
-                    inactiveInput: true
-                }
-            }
-            case 'SET_ACTIVE': {
-                return {
-                    ...state,
-                    inactiveInput: false
-                }
-            }
             case 'SET_SENT': {
                 return {
                     ...state,
                     sent: true
                 }
             }
+            case 'SET_ERROR': {
+                return {
+                    ...state,
+                    isError: action.value
+                }
+            }
             case 'NEXT_STEP': {
-                const currentRecord = state.entries[state.activeStep]
-                const answer = currentRecord.answer?.replace(/\r?\n|\r/g, ' ') // removes line breaks
+                const data = {
+                    ...state,
+                    entries: state.entries.map(e => ({ ...e }))
+                }
+                const { activeStep, entries } = data
+                const { validators, answer, name } = entries[activeStep]
+                const formatedAnswer = answer?.replace(/\r?\n|\r/g, ' ') // removes line breaks
                 // if the current answer is empty or doesn't exists
-                if (!answer || /^\s+$/.test(answer)) {
+                if (!formatedAnswer || /^\s+$/.test(formatedAnswer)) {
                     return state
                 }
-                const data = { ...state }
+
                 // validate the answer with the validators
-                if (currentRecord.validators) {
-                    for (const validator of currentRecord.validators) {
-                        if (!validator.fn(answer)) {
-                            data.entries.splice(state.activeStep + 1, 0, {
-                                name: 'error',
+                if (validators) {
+                    for (const validator of validators) {
+                        if (!validator.fn(formatedAnswer)) {
+                            entries.splice(activeStep + 1, 0, {
+                                name: name,
                                 question: validator.msg,
-                                validators: currentRecord.validators
+                                validators: validators
                             })
+                            entries[activeStep].name = 'error'
                             data.activeStep += 1
                             return data
                         }
                     }
                 }
                 // update to next step if no errors
-                if (state.activeStep < state.entries.length) data.activeStep = state.activeStep + 1
-                // replace [variable string] in question
-                let { question } = data.entries[data.activeStep]
-                const variableWords = question.match(/\[(.*?)\]/g) // get variable words
-                if (variableWords) {
-                    variableWords.forEach((variableWord) => { // replace all variable words
-                        const word = data.entries.find((record) => record.name === variableWord.slice(1, -1))?.answer ?? ''
-                        question = question.replace(variableWord, word.replace(/\r?\n|\n/g, ''))
-                    })
-                    data.entries[data.activeStep].question = question
+                const nextStep = activeStep < entries.length ? activeStep + 1 : activeStep
+
+                if (nextStep < entries.length) {
+                    // replace [variable string] in question
+                    let { question } = entries[nextStep]
+                    const variableWords = question.match(/\[(.*?)\]/g) // get variable words
+                    if (variableWords) {
+                        variableWords.forEach(word => { // replace all variable words
+                            const replacementWord = entries.find(record => record.name === word.slice(1, -1))?.answer ?? ''
+                            question = question.replace(word, replacementWord.replace(/\r?\n|\n/g, ''))
+                        })
+                        entries[nextStep].question = question
+                    }
+                } else {
+                    data.isEnd = true
                 }
-                // set inative input if last message
-                data.inactiveInput = data.activeStep >= state.entries.length
-                // need to continue work to send it....
-                data.sent = data.activeStep >= state.entries.length
+                data.activeStep = nextStep
                 return data
             }
             case 'UPDATE_ANSWER': {
-                if (state.activeStep < state.entries.length) {
-                    const data = [...state.entries]
-                    if (action.value !== null && action.value !== undefined) data[state.activeStep] = {
-                        ...data[state.activeStep],
-                        answer: action.value
-                    }
+                const { activeStep, entries } = state
+                const { value } = action
+
+                if (activeStep < entries.length && value !== null && value !== undefined) {
                     return {
                         ...state,
-                        entries: data
+                        entries: entries.map((entry, i) => i === activeStep ? {
+                            ...entry,
+                            answer: value
+                        } : entry
+                        )
                     }
                 }
                 return state
@@ -96,16 +101,17 @@ const formReducer = (state: chatHistoryState, action: chatHistoryAction) => {
             case 'RESET': {
                 return {
                     activeStep: 0,
-                    entries: state.init,
-                    inactiveInput: false,
+                    entries: state.init.map(e => ({ ...e })),
+                    isEnd: false,
                     sent: false,
-                    init: state.init
+                    init: state.init,
                 }
             }
             default: throw Error('Unknown action type: ' + action.type)
         }
     } catch (error) {
         console.error('Error when tried to update the chat history', error)
+
         return state
     }
 

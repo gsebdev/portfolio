@@ -9,16 +9,30 @@ interface ContactFormProps {
     entries: Record[],
     initialMsg?: string,
     endMsg?: string,
-    style?: {}
+    sendCallback?: (data: Record[]) => Promise<true | Error>
+    style?: {
+        primaryColor?: string
+        secondaryColor?: string
+        color?: string
+        fontFamily?: string
+        maxWidth?: number
+        transitionDuration?: string
+        bubbleBorderRadius?: number
+        bubbleAside?: Boolean
+        bubbleHeight?: number
+        inputMinHeight?: number
+        inputMaxWidth?: number
+        inputBorderRadius?: number
+    }
 }
 
-const ContactForm: React.FC<ContactFormProps> = ({ entries, initialMsg, endMsg, style }) => {
+const ContactForm: React.FC<ContactFormProps> = ({ entries, initialMsg, endMsg, style, sendCallback }) => {
     const formRef = useRef<HTMLFormElement>(null)
     const inputRef = useRef<HTMLTextAreaElement | null>(null) // Reference to the textarea element
     const [chatHistory, dispatch] = useReducer(formReducer, { // State management for chat history
         activeStep: 0,
-        entries: entries,
-        inactiveInput: false,
+        entries: entries.map(e => ({ ...e })),
+        isEnd: false,
         sent: false,
         init: entries
     })
@@ -33,7 +47,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ entries, initialMsg, endMsg, 
     }, [])
 
     const placeFormAtBottom = useCallback(() => {
-        if(formRef.current) {
+        if (formRef.current) {
             const { bottom } = formRef.current.getBoundingClientRect()
             window.scrollBy({
                 top: bottom - window.innerHeight + 50,
@@ -45,13 +59,31 @@ const ContactForm: React.FC<ContactFormProps> = ({ entries, initialMsg, endMsg, 
 
     useEffect(() => { // adjust textarea height whenever chatHistory changes
         adjustInputHeight()
-        placeFormAtBottom()       
+        placeFormAtBottom()
         if (chatHistory.entries.length > entries.length * 2) {
             dispatch({
                 type: 'RESET'
             })
         }
-    }, [chatHistory, adjustInputHeight, placeFormAtBottom, entries])
+        if (chatHistory.isEnd === true && sendCallback && chatHistory.sent === false && !chatHistory.isError) {
+            sendCallback(chatHistory.entries).then((response) => {
+                if (response === true) {
+                    dispatch({
+                        type: 'SET_SENT'
+                    })
+                } else {
+                    throw new Error('Erreur d\'envoi: ' + response.message)
+                }
+
+            }).catch((err) => {
+                console.error(err.message)
+                dispatch({
+                    type: 'SET_ERROR',
+                    value: 'Oups!\nUne Erreur est survenue lors de l\'envoi de votre message...'
+                })
+            })
+        }
+    }, [chatHistory, adjustInputHeight, placeFormAtBottom, entries, sendCallback])
 
     const handleInputChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => { // Function to handle textarea value change
         dispatch({
@@ -91,7 +123,17 @@ const ContactForm: React.FC<ContactFormProps> = ({ entries, initialMsg, endMsg, 
     }, [])
 
     return (
-        <ContactFormContainer>
+        <ContactFormContainer
+            $primaryColor={style?.primaryColor ?? 'darkmagenta'}
+            $secondaryColor={style?.secondaryColor ?? 'blueviolet'}
+            $fontFamily={style?.fontFamily}
+            $color={style?.color}
+            $maxWidth={style?.maxWidth}
+            $transitionDuration={style?.transitionDuration}
+            $borderRadius={style?.bubbleBorderRadius}
+            $compact={style?.bubbleAside}
+            $recordHeight={style?.bubbleHeight}
+        >
             <div>
                 {initialMsg &&
                     <RecordContainer>
@@ -109,18 +151,24 @@ const ContactForm: React.FC<ContactFormProps> = ({ entries, initialMsg, endMsg, 
                     <RecordContainer>
                         <Question>{endMsg}</Question>
                     </RecordContainer>}
+                {chatHistory.isError &&
+                    <RecordContainer>
+                        <Question>{chatHistory.isError}</Question>
+                    </RecordContainer>}
             </div>
             <ChatForm
-                $isInactive={chatHistory.inactiveInput}
+                $isInactive={chatHistory.isEnd}
+                $minHeight={style?.inputMinHeight}
+                $maxWidth={style?.inputMaxWidth}
+                $borderRadius={style?.inputBorderRadius}
                 onSubmit={handleSubmit}
-                $buttonBgColor='red'
                 ref={formRef}
                 onFocus={placeFormAtBottom}
             >
                 <span className='info'><b>Ctrl + Enter</b> pour aller à la ligne</span>
                 <textarea
                     ref={inputRef}
-                    readOnly={chatHistory.inactiveInput ? true : false}
+                    readOnly={chatHistory.isEnd ? true : false}
                     onKeyDown={handleKeyDown}
                     onChange={handleInputChange}
                     value={chatHistory.entries[chatHistory.activeStep]?.answer ?? ''}
